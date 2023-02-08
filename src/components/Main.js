@@ -1,23 +1,23 @@
 import React from 'react';
 
-function Main() {
-  return(    
+function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+  return(
     <main  className="content">
       {/* секция с профилем */}
       <section  className="profile" aria-label="Профиль">
         <div  className="profile__card">
-          <a  className="profile__avatar-cover">
+          <a className="profile__avatar-cover" onClick={onEditAvatar}>
             <img  className="profile__avatar" src="<%=require('./images/profile__avatar.png')%>" alt="Аватарка"/>
           </a>
           <div  className="profile__info">
             <div  className="profile__info-edit">
               <h1  className="profile__info-title">Жак-Ив Кусто</h1>
-              <button  className="profile__info-edit-button" name="info-edit-button" type="button" aria-label="Редактировать профиль"></button>
+              <button  className="profile__info-edit-button" name="info-edit-button" type="button" aria-label="Редактировать профиль" onClick={onEditProfile} />
             </div>
             <p  className="profile__info-subtitle">Исследователь океана</p>
           </div>
         </div>
-        <button  className="profile__add-button" name="add-button" type="button" aria-label="Добавить"></button>
+        <button  className="profile__add-button" name="add-button" type="button" aria-label="Добавить" onClick={onAddPlace} />
       </section>
 
       {/* секция с карточками */}
@@ -39,5 +39,5 @@ function Main() {
     </main>
   );
 }
-  
+
   export default Main;
