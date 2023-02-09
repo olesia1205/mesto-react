@@ -1,20 +1,20 @@
 import React from 'react';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescription, userAvatar}) {
   return(
     <main  className="content">
       {/* секция с профилем */}
       <section  className="profile" aria-label="Профиль">
         <div  className="profile__card">
           <a className="profile__avatar-cover" onClick={onEditAvatar}>
-            <img  className="profile__avatar" src="<%=require('./images/profile__avatar.png')%>" alt="Аватарка"/>
+            <img  className="profile__avatar" src={userAvatar} alt="Аватарка"/>
           </a>
           <div  className="profile__info">
             <div  className="profile__info-edit">
-              <h1  className="profile__info-title">Жак-Ив Кусто</h1>
+              <h1  className="profile__info-title">{userName}</h1>
               <button  className="profile__info-edit-button" name="info-edit-button" type="button" aria-label="Редактировать профиль" onClick={onEditProfile} />
             </div>
-            <p  className="profile__info-subtitle">Исследователь океана</p>
+            <p  className="profile__info-subtitle">{userDescription}</p>
           </div>
         </div>
         <button  className="profile__add-button" name="add-button" type="button" aria-label="Добавить" onClick={onAddPlace} />

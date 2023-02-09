@@ -4,11 +4,13 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import api from '../utils/Api';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [userData, setUserData] = useState({});
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -16,9 +18,15 @@ function App() {
     setIsEditAvatarPopupOpen(false);
   }
 
-  // useEffect(() => {
-  //   console.log("123");
-  // }, []);
+  useEffect(() => {
+    api.getAllNeededData()
+      .then((result) => {
+        const [dataForUserInfo, dataForInitialCards] = result;
+        // console.log(result);
+        setUserData(dataForUserInfo);
+      })
+      .catch(err => alert(err))
+  }, []);
 
   return (
     <div  className="container">
@@ -28,6 +36,9 @@ function App() {
         onEditProfile={() => setIsEditProfilePopupOpen(true)}
         onEditAvatar={() => setIsEditAvatarPopupOpen(true)}
         onAddPlace={() => setIsAddPlacePopupOpen(true)}
+        userName={userData.name}
+        userDescription={userData.about}
+        userAvatar={userData.avatar}
       />
 
       <Footer />
@@ -38,9 +49,9 @@ function App() {
         title='Редактировать профиль'
         children={
           <>
-            <input  className="popup__input popup__input_info_name" type="text" name="profileName" placeholder="Ваше имя" value="" required minLength="2" maxLength="40"/>
+            <input  className="popup__input popup__input_info_name" type="text" name="profileName" placeholder="Ваше имя" defaultValue="" required minLength="2" maxLength="40"/>
             <span  className="popup__input-error" id="profileName-error"/>
-            <input  className="popup__input popup__input_info_about" type="text" name="profileAbout" placeholder="Ваш род деятельности" value="" required minLength="2" maxLength="200"/>
+            <input  className="popup__input popup__input_info_about" type="text" name="profileAbout" placeholder="Ваш род деятельности" defaultValue="" required minLength="2" maxLength="200"/>
             <span  className="popup__input-error" id="profileAbout-error"/>
             <button  className="popup__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
             <button  className="popup__close-button" type="button" name="close-button"/>
@@ -56,9 +67,9 @@ function App() {
         title='Новое место'
         children={
           <>
-            <input  className="popup__input popup__input_info_place-name" type="text" name="place-name" placeholder="Название" value="" required minLength="2" maxLength="30"/>
+            <input  className="popup__input popup__input_info_place-name" type="text" name="place-name" placeholder="Название" defaultValue="" required minLength="2" maxLength="30"/>
             <span  className="popup__input-error" id="place-name-error"/>
-            <input  className="popup__input popup__input_info_place-link" type="url" name="place-link" placeholder="Ссылка на картинку" value="" required/>
+            <input  className="popup__input popup__input_info_place-link" type="url" name="place-link" placeholder="Ссылка на картинку" defaultValue="" required/>
             <span  className="popup__input-error" id="place-link-error"/>
             <button  className="popup__submit-button" type="submit" name="submit-button" value="Создать">Создать</button>
             <button  className="popup__close-button" type="button" name="close-button"/>
@@ -74,7 +85,7 @@ function App() {
         title='Обновить аватар'
         children={
           <>
-            <input  className="popup__input popup__input_avatar-link" type="url" name="avatar-link" placeholder="Ссылка на фото" value="" required/>
+            <input  className="popup__input popup__input_avatar-link" type="url" name="avatar-link" placeholder="Ссылка на фото" defaultValue="" required/>
             <span  className="popup__input-error" id="avatar-link-error"/>
             <button  className="popup__submit-button" type="submit" name="submit-button" value="Сохранить">Сохранить</button>
             <button  className="popup__close-button" type="button" name="close-button"/>
