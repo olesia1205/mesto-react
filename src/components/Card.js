@@ -1,9 +1,14 @@
 import React from 'react';
 
-function Card(card) {
+function Card({card, onCardClick, onImagePopup}) {
   return(
     <article className="place">
-      <img className="place__image" src={card.link} alt={card.name} />
+      <img className="place__image" src={card.link} alt={card.name}
+        onClick={() => {
+          onCardClick(card)
+          onImagePopup()
+        }}
+      />
       <div className="place__info">
         <h2 className="place__title">{card.name}</h2>
         <div className="place__like-unit">

@@ -10,39 +10,54 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [userData, setUserData] = useState({});
   const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({});
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
+    setSelectedCard({});
   }
 
   useEffect(() => {
     api.getAllNeededData()
       .then((result) => {
         const [dataForUserInfo, dataForInitialCards] = result;
-        // console.log(result);
+        console.log(result);
         setUserData(dataForUserInfo);
         setCards(dataForInitialCards);
-        // console.log(cards);
       })
       .catch(err => alert(err))
   }, []);
+
+  const handleCardClick = (selectedCard) => {
+    setSelectedCard(selectedCard);
+  };
 
   return (
     <div  className="container">
       <Header />
 
+      <ImagePopup
+        card={selectedCard}
+        onClose={closeAllPopups}
+        isOpen={isImagePopupOpen}
+      />
+
       <Main
         onEditProfile={() => setIsEditProfilePopupOpen(true)}
         onEditAvatar={() => setIsEditAvatarPopupOpen(true)}
         onAddPlace={() => setIsAddPlacePopupOpen(true)}
+        onImagePopup={() => setIsImagePopupOpen(true)}
         userName={userData.name}
         userDescription={userData.about}
         userAvatar={userData.avatar}
         cards={cards}
+        onCardClick={handleCardClick}
       />
 
       <Footer />

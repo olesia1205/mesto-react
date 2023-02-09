@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './Card';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescription, userAvatar, cards}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescription, userAvatar, cards, onCardClick, onImagePopup}) {
   return(
     <main  className="content">
       {/* секция с профилем */}
@@ -23,7 +23,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescriptio
 
       {/* секция с карточками */}
       <section  className="places" aria-label="Карточки о местах">
-        {cards.map(({id, ...props}) => <Card {...props} key={id} />)}
+        {cards.map((card) => <Card card={card} key={card._id} onCardClick={onCardClick} onImagePopup={onImagePopup} />)}
       </section>
     </main>
   );
