@@ -10,6 +10,12 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =useState(false);
 
+  const closeAllPopups = () => {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
   // useEffect(() => {
   //   console.log("123");
   // }, []);
@@ -41,6 +47,7 @@ function App() {
           </>
         }
         isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
       />
 
       {/* Попап добавления и редактирования карточек */}
@@ -58,6 +65,7 @@ function App() {
           </>
         }
         isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
       />
 
       {/* Попап обновления аватара */}
@@ -73,6 +81,7 @@ function App() {
           </>
         }
         isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       />
 
       {/* Попап с картинкой */}
