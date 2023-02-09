@@ -1,6 +1,7 @@
 import React from 'react';
+import Card from './Card';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescription, userAvatar}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescription, userAvatar, cards}) {
   return(
     <main  className="content">
       {/* секция с профилем */}
@@ -22,19 +23,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescriptio
 
       {/* секция с карточками */}
       <section  className="places" aria-label="Карточки о местах">
-        <template  className="place__template">
-          <article  className="place">
-            <img  className="place__image" src="#" alt="Описание карточки"/>
-            <div  className="place__info">
-              <h2  className="place__title"></h2>
-              <div  className="place__like-unit">
-                <button  className="place__like-button" name="like-button" type="button"></button>
-                <h3  className="place__like-number"></h3>
-              </div>
-            </div>
-            <button  className="place__delete-button" name="delete-button" type="button"></button>
-          </article>
-        </template>
+        {cards.map(({id, ...props}) => <Card {...props} key={id} />)}
       </section>
     </main>
   );

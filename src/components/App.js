@@ -11,6 +11,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [userData, setUserData] = useState({});
+  const [cards, setCards] = useState([]);
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -24,6 +25,8 @@ function App() {
         const [dataForUserInfo, dataForInitialCards] = result;
         // console.log(result);
         setUserData(dataForUserInfo);
+        setCards(dataForInitialCards);
+        // console.log(cards);
       })
       .catch(err => alert(err))
   }, []);
@@ -39,6 +42,7 @@ function App() {
         userName={userData.name}
         userDescription={userData.about}
         userAvatar={userData.avatar}
+        cards={cards}
       />
 
       <Footer />
