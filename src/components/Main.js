@@ -23,7 +23,16 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, userName, userDescriptio
 
       {/* секция с карточками */}
       <section  className="places" aria-label="Карточки о местах">
-        {cards.map((card) => <Card card={card} key={card._id} onCardClick={onCardClick} onImagePopup={onImagePopup} />)}
+        {
+          cards.map((card) => (
+            <Card
+              card={card}
+              key={card._id}
+              onCardClick={onCardClick}
+              onImagePopup={onImagePopup}
+            />
+          )
+        )}
       </section>
     </main>
   );
