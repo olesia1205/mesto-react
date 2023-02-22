@@ -5,6 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
 import api from '../utils/Api';
 import { CurrentUserContext} from '../contexts/CurrentUserContext';
 
@@ -55,7 +56,7 @@ function App() {
 
     api.putLike(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards(state => state.map((c) => c._id === card._id ? newCard : c));
       })
       .catch(err => alert(err))
   }
@@ -65,7 +66,15 @@ function App() {
 
     api.deleteLike(card._id, isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards(state => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch(err => alert(err))
+  }
+
+  function handleCardDelete (card) {
+    api.deleteCard(card._id)
+      .then(() => {
+        setCards(cards => cards.filter((c) => c._id !== card._id));
       })
       .catch(err => alert(err))
   }
@@ -93,25 +102,12 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDislike={handleCardDislike}
+          onCardDelete={handleCardDelete}
         />
 
         <Footer />
 
-        {/* Попап редактирования профиля */}
-        <PopupWithForm
-          name='profile'
-          title='Редактировать профиль'
-          buttonText='Сохранить'
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <>
-            <input className="popup__input popup__input_info_name" type="text" name="profileName" placeholder="Ваше имя" defaultValue="" required minLength="2" maxLength="40"/>
-            <span className="popup__input-error" id="profileName-error"/>
-            <input className="popup__input popup__input_info_about" type="text" name="profileAbout" placeholder="Ваш род деятельности" defaultValue="" required minLength="2" maxLength="200"/>
-            <span className="popup__input-error" id="profileAbout-error"/>
-          </>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
 
         {/* Попап добавления и редактирования карточек */}
         <PopupWithForm
