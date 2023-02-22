@@ -11,7 +11,7 @@ class Api {
     return Promise.reject(`Ошибка: ${response.status}`);
   }
 
-  _getUserInfo() {
+  getUserInfo() {
     return fetch(`${this._url}users/me`, {
       method: 'GET',
       headers: this._headers
@@ -28,7 +28,7 @@ class Api {
   }
 
   getAllNeededData() {
-    return Promise.all([this._getUserInfo(), this._getInitialCards()]);
+    return Promise.all([this.getUserInfo(), this._getInitialCards()]);
   }
 
   patchUserInfo(data) {
