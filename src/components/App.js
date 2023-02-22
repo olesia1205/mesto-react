@@ -50,6 +50,15 @@ function App() {
     setSelectedCard(selectedCard);
   };
 
+  function handleCardLike (card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    api.putLike(card._id)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch(err => alert(err))
+  }
+
   return (
     <div  className="container">
       <CurrentUserContext.Provider value={currentUser}>
@@ -71,6 +80,7 @@ function App() {
           userAvatar={userData.avatar}
           cards={cards}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
         />
 
         <Footer />
