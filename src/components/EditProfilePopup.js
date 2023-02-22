@@ -12,9 +12,13 @@ function EditProfilePopup({isOpen, onClose}) {
     setDescription(currentUser.about);
   }, [currentUser]);
 
-  // function handleChange(evt) {
-  //   setName(evt.target.value);
-  // }
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    props.onUpdateUser({
+      name,
+      about: description,
+    });
+  }
 
   return(
     <PopupWithForm
@@ -23,6 +27,7 @@ function EditProfilePopup({isOpen, onClose}) {
       buttonText='Сохранить'
       isOpen={isOpen}
       onClose={onClose}
+      onSubmit={handleSubmit}
     >
       <>
         <input className="popup__input popup__input_info_name" type="text" name="profileName" placeholder="Ваше имя"

@@ -31,7 +31,7 @@ function App() {
     api.getAllNeededData()
       .then((result) => {
         const [dataForUserInfo, dataForInitialCards] = result;
-        console.log(result);
+        // console.log(result);
         setUserData(dataForUserInfo);
         setCards(dataForInitialCards);
       })
@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     api.getUserInfo()
       .then((userInfo) => {
-        console.log(userInfo);
+        // console.log(userInfo);
         setCurrentUser(userInfo);
       })
       .catch(err => alert(err))
@@ -51,7 +51,7 @@ function App() {
     setSelectedCard(selectedCard);
   };
 
-  function handleCardLike (card) {
+  function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     api.putLike(card._id, !isLiked)
@@ -61,7 +61,7 @@ function App() {
       .catch(err => alert(err))
   }
 
-  function handleCardDislike (card) {
+  function handleCardDislike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     api.deleteLike(card._id, isLiked)
@@ -71,10 +71,19 @@ function App() {
       .catch(err => alert(err))
   }
 
-  function handleCardDelete (card) {
+  function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then(() => {
         setCards(cards => cards.filter((c) => c._id !== card._id));
+      })
+      .catch(err => alert(err))
+  }
+
+  function handleUpdateUser() {
+    api.patchUserInfo()
+      .then(() => {
+        setCurrentUser();
+        closeAllPopups();
       })
       .catch(err => alert(err))
   }
@@ -107,7 +116,7 @@ function App() {
 
         <Footer />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
         {/* Попап добавления и редактирования карточек */}
         <PopupWithForm
