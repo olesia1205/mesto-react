@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Routes } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import api from '../utils/Api';
 import { CurrentUserContext} from '../contexts/CurrentUserContext';
 
@@ -88,6 +88,15 @@ function App() {
       .catch(err => alert(err))
   }
 
+  function handleUpdateAvatar(newAvatar) {
+    api.changeAvatar(newAvatar)
+      .then((newAvatar) => {
+        setCurrentUser(newAvatar);
+        closeAllPopups();
+      })
+      .catch(err => alert(err))
+  }
+
   return (
     <div  className="container">
       <CurrentUserContext.Provider value={currentUser}>
@@ -117,6 +126,7 @@ function App() {
         <Footer />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
         {/* Попап добавления и редактирования карточек */}
         <PopupWithForm
@@ -131,20 +141,6 @@ function App() {
             <span  className="popup__input-error" id="place-name-error"/>
             <input  className="popup__input popup__input_info_place-link" type="url" name="place-link" placeholder="Ссылка на картинку" defaultValue="" required/>
             <span  className="popup__input-error" id="place-link-error"/>
-          </>
-        </PopupWithForm>
-
-        {/* Попап обновления аватара */}
-        <PopupWithForm
-          name='avatar'
-          title='Обновить аватар'
-          buttonText='Сохранить'
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <>
-            <input  className="popup__input popup__input_avatar-link" type="url" name="avatar-link" placeholder="Ссылка на фото" defaultValue="" required/>
-            <span  className="popup__input-error" id="avatar-link-error"/>
           </>
         </PopupWithForm>
 
