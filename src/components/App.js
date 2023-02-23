@@ -88,10 +88,10 @@ function App() {
       .catch(err => alert(err))
   }
 
-  function handleUpdateAvatar(newAvatar) {
-    api.changeAvatar(newAvatar)
-      .then((newAvatar) => {
-        setCurrentUser(newAvatar);
+  function handleUpdateAvatar(avatar) {
+    api.changeAvatar(avatar)
+      .then((avatar) => {
+        setCurrentUser(avatar);
         closeAllPopups();
       })
       .catch(err => alert(err))
