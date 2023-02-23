@@ -79,10 +79,10 @@ function App() {
       .catch(err => alert(err))
   }
 
-  function handleUpdateUser() {
-    api.patchUserInfo()
-      .then(() => {
-        setCurrentUser();
+  function handleUpdateUser(newUserInfo) {
+    api.patchUserInfo(newUserInfo)
+      .then((newUserInfo) => {
+        setCurrentUser(newUserInfo);
         closeAllPopups();
       })
       .catch(err => alert(err))
