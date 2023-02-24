@@ -54,7 +54,6 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
     api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards(state => state.map((c) => c._id === card._id ? newCard : c));
@@ -83,6 +82,15 @@ function App() {
     api.changeAvatar(avatar)
       .then((avatar) => {
         setCurrentUser(avatar);
+        closeAllPopups();
+      })
+      .catch(err => alert(err))
+  }
+
+  function handleAddPlaceSubmit(data) {
+    api.postNewCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch(err => alert(err))
@@ -117,7 +125,7 @@ function App() {
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
 
         {/* Попап удаления карточки */}
         <PopupWithForm
