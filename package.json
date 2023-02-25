@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -b master -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +41,10 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
-  }
-
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olesia1205/mesto-react.git"
+  },
+  "homepage": "https://olesia1205.github.io/mesto-react/index.html"
 }
