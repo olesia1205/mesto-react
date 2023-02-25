@@ -1,15 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({isOpen, onClose, ...props}) {
-  const placeNameRef = useRef();
-  const placeLinkRef = useRef();
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
+
+  useEffect(() => {
+    setName('');
+    setLink('');
+  }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
     props.onAddPlace({
-      name: placeNameRef.current.value,
-      link: placeLinkRef.current.value
+      name: name,
+      link: link
     });
   }
 
@@ -23,9 +28,11 @@ function AddPlacePopup({isOpen, onClose, ...props}) {
       onSubmit={handleSubmit}
     >
       <>
-        <input className="popup__input popup__input_info_place-name" ref={placeNameRef} type="text" name="place-name" placeholder="Название" defaultValue="" required minLength="2" maxLength="30"/>
+        <input className="popup__input popup__input_info_place-name"
+          value={name || ''} onChange={evt => setName(evt.target.value)} type="text" name="place-name" placeholder="Название" defaultValue="" required minLength="2" maxLength="30"/>
         <span className="popup__input-error" id="place-name-error"/>
-        <input className="popup__input popup__input_info_place-link" ref={placeLinkRef} type="url" name="place-link" placeholder="Ссылка на картинку" defaultValue="" required/>
+        <input className="popup__input popup__input_info_place-link"
+          value={link || ''} onChange={evt => setLink(evt.target.value)} type="url" name="place-link" placeholder="Ссылка на картинку" defaultValue="" required/>
         <span className="popup__input-error" id="place-link-error"/>
       </>
     </PopupWithForm>
