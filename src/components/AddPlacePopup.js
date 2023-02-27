@@ -29,10 +29,10 @@ function AddPlacePopup({isOpen, onClose, ...props}) {
     >
       <>
         <input className="popup__input popup__input_info_place-name"
-          value={name || ''} onChange={evt => setName(evt.target.value)} type="text" name="place-name" placeholder="Название" defaultValue="" required minLength="2" maxLength="30"/>
+          value={name || ''} onChange={evt => setName(evt.target.value)} type="text" name="place-name" placeholder="Название" required minLength="2" maxLength="30"/>
         <span className="popup__input-error" id="place-name-error"/>
         <input className="popup__input popup__input_info_place-link"
-          value={link || ''} onChange={evt => setLink(evt.target.value)} type="url" name="place-link" placeholder="Ссылка на картинку" defaultValue="" required/>
+          value={link || ''} onChange={evt => setLink(evt.target.value)} type="url" name="place-link" placeholder="Ссылка на картинку" required/>
         <span className="popup__input-error" id="place-link-error"/>
       </>
     </PopupWithForm>
