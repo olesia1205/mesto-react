@@ -15,7 +15,6 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [userData, setUserData] = useState({});
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -33,7 +32,7 @@ function App() {
       .then((result) => {
         const [dataForUserInfo, dataForInitialCards] = result;
         // console.log(result);
-        setUserData(dataForUserInfo);
+        setCurrentUser(dataForUserInfo);
         setCards(dataForInitialCards);
       })
       .catch(err => alert(err))
@@ -48,9 +47,15 @@ function App() {
       .catch(err => alert(err))
   }, []);
 
-  const handleCardClick = (selectedCard) => {
+  function handleCardClick (selectedCard) {
     setSelectedCard(selectedCard);
   };
+
+  function handleOverlayClick (evt) {
+    if (evt.target === evt.currentTarget) {
+      closeAllPopups();
+    }
+  }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -96,6 +101,11 @@ function App() {
       .catch(err => alert(err))
   }
 
+  const handleEditProfileClick = () => setIsEditProfilePopupOpen(true);
+  const handleEditAvatarClick = () => setIsEditAvatarPopupOpen(true);
+  const handleAddPlaceClick = () => setIsAddPlacePopupOpen(true);
+  const handleImagePopupClick = () => setIsImagePopupOpen(true);
+
   return (
     <div  className="container">
       <CurrentUserContext.Provider value={currentUser}>
@@ -105,16 +115,14 @@ function App() {
           card={selectedCard}
           onClose={closeAllPopups}
           isOpen={isImagePopupOpen}
+          onOverlayClick={handleOverlayClick}
         />
 
         <Main
-          onEditProfile={() => setIsEditProfilePopupOpen(true)}
-          onEditAvatar={() => setIsEditAvatarPopupOpen(true)}
-          onAddPlace={() => setIsAddPlacePopupOpen(true)}
-          onImagePopup={() => setIsImagePopupOpen(true)}
-          userName={userData.name}
-          userDescription={userData.about}
-          userAvatar={userData.avatar}
+          onEditProfile={handleEditProfileClick}
+          onEditAvatar={handleEditAvatarClick}
+          onAddPlace={handleAddPlaceClick}
+          onImagePopup={handleImagePopupClick}
           cards={cards}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
@@ -123,9 +131,9 @@ function App() {
 
         <Footer />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onOverlayClick={handleOverlayClick} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onOverlayClick={handleOverlayClick} />
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} onOverlayClick={handleOverlayClick} />
 
         {/* Попап удаления карточки */}
         <PopupWithForm
