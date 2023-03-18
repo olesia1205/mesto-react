@@ -20,7 +20,15 @@ function EditAvatarPopup({isOpen, onClose, onOverlayClick, ...props}) {
       onOverlayClick={onOverlayClick}
     >
       <>
-        <input className="popup__input popup__input_avatar-link" ref={avatarRef} type="url" name="avatar-link" placeholder="Ссылка на фото" defaultValue="" required/>
+        <input
+          className="popup__input popup__input_avatar-link"
+          ref={avatarRef}
+          type="url"
+          name="avatar-link"
+          placeholder="Ссылка на фото"
+          defaultValue=""
+          required
+        />
         <span className="popup__input-error" id="avatar-link-error"/>
       </>
     </PopupWithForm>
